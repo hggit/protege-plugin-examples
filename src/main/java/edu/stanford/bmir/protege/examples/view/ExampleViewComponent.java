@@ -16,7 +16,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
         setLayout(new BorderLayout());
         metricsComponent = new Metrics(getOWLModelManager());
         add(metricsComponent, BorderLayout.CENTER);
-        log.info("Example View Component initialized");
+        log.info("Attributes initialized");
     }
 
 	@Override
