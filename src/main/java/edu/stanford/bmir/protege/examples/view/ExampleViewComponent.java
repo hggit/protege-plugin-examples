@@ -14,13 +14,13 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
     @Override
     protected void initialiseOWLView() throws Exception {
         setLayout(new BorderLayout());
-        metricsComponent = new Metrics(getOWLModelManager());
-        add(metricsComponent, BorderLayout.CENTER);
+        //metricsComponent = new Metrics(getOWLModelManager());
+        //add(metricsComponent, BorderLayout.CENTER);
         log.info("Attributes initialized");
     }
 
 	@Override
 	protected void disposeOWLView() {
-		metricsComponent.dispose();
+		//metricsComponent.dispose();
 	}
 }
