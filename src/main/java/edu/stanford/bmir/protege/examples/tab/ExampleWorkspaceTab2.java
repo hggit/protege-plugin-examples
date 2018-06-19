@@ -15,7 +15,7 @@ public class ExampleWorkspaceTab2 extends OWLWorkspaceViewsTab {
 	
 	private OWLModelManagerListener modelListener = event -> {
         if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
-            recalculate();
+            //recalculate();
         }
     };
 
