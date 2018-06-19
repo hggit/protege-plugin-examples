@@ -30,7 +30,7 @@
 		<category value="@org.protege.ontologycategory" />
 	</extension>
 	
-	<!-- Menu and menu items -->
+	<!-- Menu and menu 
 	
 	<extension id="toolmenu1" point="org.protege.editor.core.application.EditorKitMenuAction">
 		<name value="Example menu item (1)"/>
@@ -75,5 +75,5 @@
         <class value="edu.stanford.bmir.protege.examples.menu.UnderSubMenu"/>
         <editorKitId value="any"/>
     </extension>
-    
+    items -->
 </plugin>
