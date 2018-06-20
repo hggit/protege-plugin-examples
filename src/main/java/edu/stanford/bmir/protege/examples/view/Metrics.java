@@ -10,44 +10,49 @@ import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
 
+import org.semanticweb.owlapi.model.OWLClass;
+
 public class Metrics extends JPanel {
 
-    private JButton refreshButton = new JButton("Refresh");
+    //private JButton refreshButton = new JButton("Refresh");
 
     private JLabel textComponent = new JLabel();
 
     private OWLModelManager modelManager;
 
 
-    private ActionListener refreshAction = e -> recalculate();
+    /*private ActionListener refreshAction = e -> recalculate();
     
     private OWLModelManagerListener modelListener = event -> {
         if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
-            recalculate();
+            refresh(getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
         }
-    };
+    };*/
     
-    public Metrics(OWLModelManager modelManager) {
+    public Metrics(OWLModelManager modelManager, OWLClass cla) {
     	this.modelManager = modelManager;
-        recalculate();
+        refresh(cla);
         
-        modelManager.addListener(modelListener);
-        refreshButton.addActionListener(refreshAction);
+        //modelManager.addListener(modelListener);
+        //refreshButton.addActionListener(refreshAction);
+        
         
         add(textComponent);
-        add(refreshButton);
+        //add(refreshButton);
     }
     
     public void dispose() {
-        modelManager.removeListener(modelListener);
-        refreshButton.removeActionListener(refreshAction);
+        //modelManager.removeListener(modelListener);
+        //refreshButton.removeActionListener(refreshAction);
     }
     
-    private void recalculate() {
-        int count = modelManager.getActiveOntology().getClassesInSignature().size();
+    public void refresh(OWLClass selectedClass) {
+        /*int count = modelManager.getActiveOntology().getClassesInSignature().size();
         if (count == 0) {
             count = 1;  // owl:Thing is always there.
-        }
-        textComponent.setText("Total classes = " + count);
+        }*/
+    	
+    	
+        if(selectedClass!=null) textComponent.setText("Selected Class : " + selectedClass.getIRI().getFragment());
     }
 }

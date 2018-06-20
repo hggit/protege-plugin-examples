@@ -20,7 +20,7 @@ public class ExampleWorkspaceTab2 extends OWLWorkspaceViewsTab {
     };
 
 	public ExampleWorkspaceTab2() {
-		//setToolTipText("Custom tooltip text for Example Tab (2)");
+		//setToolTipText("The Aristotle Tab helps you work with Aristotelian ontologies");
 	}
 
     @Override
