@@ -24,7 +24,7 @@
 	<!-- View -->
 
 	<extension id="AttributesView" point="org.protege.editor.core.application.ViewComponent">
-		<label value="Attributes" />
+		<label value="Details" />
 		<class value="edu.stanford.bmir.protege.examples.view.AttributesView" />
 		<headerColor value="@org.protege.ontologycolor"/>
 		<category value="@org.protege.ontologycategory" />

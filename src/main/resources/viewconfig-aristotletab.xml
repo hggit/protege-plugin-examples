@@ -7,7 +7,7 @@
             </Component>
         </CNode>
         <CNode>
-            <Component label="Attributes">
+            <Component label="Details">
                 <Property id="pluginId" value="protege.plugin.examples.AttributesView"/>
             </Component>
         </CNode>
