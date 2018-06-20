@@ -9,9 +9,9 @@ import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
 import java.awt.event.ActionListener;
 
-public class ExampleWorkspaceTab2 extends OWLWorkspaceViewsTab {
+public class AristotleTab extends OWLWorkspaceViewsTab {
 
-	private static final Logger log = LoggerFactory.getLogger(ExampleWorkspaceTab2.class);
+	private static final Logger log = LoggerFactory.getLogger(AristotleTab.class);
 	
 	private OWLModelManagerListener modelListener = event -> {
         if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
@@ -19,7 +19,7 @@ public class ExampleWorkspaceTab2 extends OWLWorkspaceViewsTab {
         }
     };
 
-	public ExampleWorkspaceTab2() {
+	public AristotleTab() {
 		//setToolTipText("The Aristotle Tab helps you work with Aristotelian ontologies");
 	}
 

@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.protege.editor.owl.model.selection.OWLSelectionModelListener;
 
-public class ExampleViewComponent extends AbstractOWLViewComponent {
+public class AttributesView extends AbstractOWLViewComponent {
 
-    private static final Logger log = LoggerFactory.getLogger(ExampleViewComponent.class);
+    private static final Logger log = LoggerFactory.getLogger(AttributesView.class);
 
     private DisplayAttributes displayComponent;
 
@@ -24,7 +24,7 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
 			}    		
     	});
         
-        log.info("Attributes initialized");
+        log.info("***Attributes initialized***");
         
     }
 

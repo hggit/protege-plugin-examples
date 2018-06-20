@@ -7,8 +7,8 @@
             </Component>
         </CNode>
         <CNode>
-            <Component label="Example view component">
-                <Property id="pluginId" value="protege.plugin.examples.ExampleViewComponent"/>
+            <Component label="Attributes">
+                <Property id="pluginId" value="protege.plugin.examples.AttributesView"/>
             </Component>
         </CNode>
     </VSNode>

@@ -15,17 +15,17 @@
    -->
    <extension id="AristotleTab" point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="Aristotle"/>
-		<class value="edu.stanford.bmir.protege.examples.tab.ExampleWorkspaceTab2"/>
+		<class value="edu.stanford.bmir.protege.examples.tab.AristotleTab"/>
 		<index value="Y"/>
 		<editorKitId value="OWLEditorKit"/>
-		<defaultViewConfigFileName value="viewconfig-exampletab.xml"/>
+		<defaultViewConfigFileName value="viewconfig-aristotletab.xml"/>
    </extension>
 
 	<!-- View -->
 
-	<extension id="ExampleViewComponent" point="org.protege.editor.core.application.ViewComponent">
+	<extension id="AttributesView" point="org.protege.editor.core.application.ViewComponent">
 		<label value="Attributes" />
-		<class value="edu.stanford.bmir.protege.examples.view.ExampleViewComponent" />
+		<class value="edu.stanford.bmir.protege.examples.view.AttributesView" />
 		<headerColor value="@org.protege.ontologycolor"/>
 		<category value="@org.protege.ontologycategory" />
 	</extension>
