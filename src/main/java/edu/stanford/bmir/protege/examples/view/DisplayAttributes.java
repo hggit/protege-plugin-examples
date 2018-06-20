@@ -12,7 +12,7 @@ import org.protege.editor.owl.model.event.OWLModelManagerListener;
 
 import org.semanticweb.owlapi.model.OWLClass;
 
-public class Metrics extends JPanel {
+public class DisplayAttributes extends JPanel {
 
     //private JButton refreshButton = new JButton("Refresh");
 
@@ -29,7 +29,7 @@ public class Metrics extends JPanel {
         }
     };*/
     
-    public Metrics(OWLModelManager modelManager, OWLClass cla) {
+    public DisplayAttributes(OWLModelManager modelManager, OWLClass cla) {
     	this.modelManager = modelManager;
         refresh(cla);
         

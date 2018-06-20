@@ -3,7 +3,7 @@
 
 <plugin>
 
-	<!-- Tabs -->
+	<!-- Tabs 
 	
 	<extension id="ExampleWorkspaceTab" point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="Example Tab"/>
@@ -12,7 +12,7 @@
 		<editorKitId value="OWLEditorKit"/>
 		<defaultViewConfigFileName value="viewconfig-exampletab.xml"/>
    </extension>
-   
+   -->
    <extension id="AristotleTab" point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="Aristotle"/>
 		<class value="edu.stanford.bmir.protege.examples.tab.ExampleWorkspaceTab2"/>

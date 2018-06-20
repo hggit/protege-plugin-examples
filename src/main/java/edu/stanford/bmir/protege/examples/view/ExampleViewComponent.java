@@ -10,17 +10,17 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
 
     private static final Logger log = LoggerFactory.getLogger(ExampleViewComponent.class);
 
-    private Metrics metricsComponent;
+    private DisplayAttributes displayComponent;
 
     @Override
     protected void initialiseOWLView() throws Exception {
         setLayout(new BorderLayout());
-        metricsComponent = new Metrics(getOWLModelManager(),getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
-        add(metricsComponent, BorderLayout.CENTER);
+        displayComponent = new DisplayAttributes(getOWLModelManager(),getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
+        add(displayComponent, BorderLayout.CENTER);
         
         getOWLWorkspace().getOWLSelectionModel().addListener(new OWLSelectionModelListener() {
 			public void selectionChanged() throws Exception {
-				metricsComponent.refresh(getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
+				displayComponent.refresh(getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
 			}    		
     	});
         
@@ -30,6 +30,6 @@ public class ExampleViewComponent extends AbstractOWLViewComponent {
 
 	@Override
 	protected void disposeOWLView() {
-		metricsComponent.dispose();
+		displayComponent.dispose();
 	}
 }
