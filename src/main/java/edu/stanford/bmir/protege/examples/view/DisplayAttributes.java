@@ -67,17 +67,19 @@ public class DisplayAttributes extends JPanel {
             count = 1;  // owl:Thing is always there.
         }*/    	
     	       
-        String s="";
-        Set<OWLClassAxiom> tempAx=modelManager.getActiveOntology().getAxioms(selectedClass);
-        for(OWLClassAxiom ax: tempAx){
-            //for(OWLClassExpression nce:ax.getNestedClassExpressions())
-                //if(nce.getClassExpressionType()!=ClassExpressionType.OWL_CLASS)
-        	//Set<OWLClass> signature = ax.getClassesInSignature();
-                    s+=ax+"\n";
-        }
+        
         
         if(selectedClass!=null)
         	{
+        	String s="";
+            Set<OWLClassAxiom> tempAx=modelManager.getActiveOntology().getAxioms(selectedClass);
+            for(OWLClassAxiom ax: tempAx){
+                //for(OWLClassExpression nce:ax.getNestedClassExpressions())
+                    //if(nce.getClassExpressionType()!=ClassExpressionType.OWL_CLASS)
+            	//Set<OWLClass> signature = ax.getClassesInSignature();
+                        s+=ax+"\n";
+            }
+        		
         		textComponent.setText("Selected Class : " + selectedClass.getIRI().getFragment());
         		textArea.append(s);
         		

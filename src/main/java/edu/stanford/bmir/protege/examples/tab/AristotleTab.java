@@ -34,6 +34,7 @@ public class AristotleTab extends OWLWorkspaceViewsTab {
 	@Override
 	public void dispose() {
 		super.dispose();
+		getOWLModelManager().removeListener(modelListener);
 		log.info("Aristotle disposed");
 	}
 }
