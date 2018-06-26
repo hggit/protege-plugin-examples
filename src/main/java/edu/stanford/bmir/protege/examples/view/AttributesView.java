@@ -21,11 +21,10 @@ public class AttributesView extends AbstractOWLViewComponent {
     @Override
     protected void initialiseOWLView() throws Exception {
         setLayout(new BorderLayout());
-        
+        getOWLWorkspace().getOWLSelectionModel().addListener(osmListener);
         displayComponent = new DisplayAttributes(getOWLModelManager(),getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());        
         add(displayComponent, BorderLayout.CENTER);
-        getOWLWorkspace().getOWLSelectionModel().addListener(osmListener);
-                
+                        
         log.info("***Attributes initialized***");
     }
 

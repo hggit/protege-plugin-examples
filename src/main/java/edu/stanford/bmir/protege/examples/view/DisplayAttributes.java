@@ -77,7 +77,7 @@ public class DisplayAttributes extends JPanel {
                 //for(OWLClassExpression nce:ax.getNestedClassExpressions())
                     //if(nce.getClassExpressionType()!=ClassExpressionType.OWL_CLASS)
             	//Set<OWLClass> signature = ax.getClassesInSignature();
-                        s+=ax+"\n";
+                        s+=ax+"*****";
             }
         		
         		textComponent.setText("Selected Class : " + selectedClass.getIRI().getFragment());
