@@ -23,7 +23,7 @@ public class AttributesView extends AbstractOWLViewComponent {
         setLayout(new BorderLayout());
         getOWLWorkspace().getOWLSelectionModel().addListener(osmListener);
         displayComponent = new DisplayAttributes(getOWLModelManager(),getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());        
-        add(displayComponent, BorderLayout.CENTER);
+        add(displayComponent);
                         
         log.info("***Attributes initialized***");
     }
