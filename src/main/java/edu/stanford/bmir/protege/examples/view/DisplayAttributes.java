@@ -255,7 +255,7 @@ public class DisplayAttributes extends JPanel {
             
             
             for (OWLObjectPropertyExpression prop:visitor.getRestrictedProperties()) {
-            	desc+=" " + prop;
+            	desc+=" " + prop.toString();
             	}
 
             
