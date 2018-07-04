@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.protege.editor.owl.model.selection.OWLSelectionModelListener;
 
+//import org.semanticweb.owlapi.model.OWLOntologyFormat;
+import com.similar2.matcher.ontology.io.OntologyReader;
+
 public class AttributesView extends AbstractOWLViewComponent {
 
     private static final Logger log = LoggerFactory.getLogger(AttributesView.class);

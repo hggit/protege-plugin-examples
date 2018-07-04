@@ -1,0 +1,458 @@
+/**
+ * 
+ */
+package com.similar2.matcher.ontology.model;
+
+import java.util.Collection;
+import java.util.Set;
+
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntologyFormat;
+
+import com.similar2.matcher.ontology.model.exceptions.GenusRTException;
+import com.similar2.matcher.ontology.model.exceptions.PrimaryEnumeratedClassRTException;
+import com.similar2.matcher.ontology.model.exceptions.ValueHierarchyRTException;
+
+/**
+ * An Aristotelian ontology
+ * 
+ * @author Philippe Genoud (Philippe.Genoud@imag.fr)
+ */
+public interface IAristotelianOntology {
+
+	// ----------------------------------------------------------------------------
+	// methods about values hierarchies and primary enumerated classes
+	// ----------------------------------------------------------------------------
+
+	/**
+	 * returns all the root PrimaryEnumeratedClasses used in this Aristotelian
+	 * ontology.
+	 * 
+	 * @return the set of root Primary Enumerated classes
+	 */
+	public Set<IPrimaryEnumeratedClass> getValueHierarchies();
+
+	/**
+	 * adds the given root PrimaryEnumeratedClasses to the set of values
+	 * hierarchies used in this Aristotelian ontology.
+	 * 
+	 * @param valueHierarchy
+	 *            the root PrimaryEnumeratedClasses to add
+	 * 
+	 * @throws ValueHierarchyRTException
+	 *             if valueHierarchy is not a root class or if there is all
+	 *             ready a valueHierarchy equals to the valueHierarchy to add.
+	 */
+	public void addValuesHierarchy(IPrimaryEnumeratedClass valuesHierarchy)
+			throws ValueHierarchyRTException;
+
+	/**
+	 * returns the root PrimaryEnumeratedClass with name id in the given name
+	 * space.
+	 * 
+	 * @param nameSpace
+	 *            the name space
+	 * @param id
+	 *            the id
+	 * 
+	 * @return the root PrimaryEnumeratedClass corresponding to the given id in
+	 *         the given name space. Null if there is no PrimaryEnumeratedClass
+	 *         with this id in the given name space.
+	 */
+	public IPrimaryEnumeratedClass getValueHierarchy(String nameSpace, String id);
+
+	/**
+	 * return the number of primary enumerated classes defined in this
+	 * arototelian ontology
+	 * 
+	 * @return the number of primary enumerated
+	 */
+	public int getNbValueHierarchies();
+
+	/**
+	 * returns the PrimaryEnumeratedClasswith with name 'id' in the given name
+	 * space.
+	 * 
+	 * @param nameSpace
+	 *            the name space
+	 * @param id
+	 *            the id
+	 * @return the Primary EnumeratedClass corresponding to the given id in the
+	 *         given name space. Null if there is no Primary Enumerated class
+	 *         with this id in the given name space.
+	 */
+	public IPrimaryEnumeratedClass getPrimaryEnumeratedClass(String nameSpace,
+			String id);
+
+	/**
+	 * returns the PrimaryEnumeratedClasswith with the given fully qualified
+	 * name
+	 * 
+	 * @param fqName
+	 *            the fully qualified name
+	 * @param id
+	 *            the id
+	 * @return the Primary EnumeratedClass corresponding to the given fully
+	 *         qualified name. Null if there is no Primary Enumerated class with
+	 *         this fully qualified name.
+	 */
+	public IPrimaryEnumeratedClass getPrimaryEnumeratedClass(String fqName);
+
+	/**
+	 * add a primary enumerated class to this aristotelian ontology.
+	 * 
+	 * @param ipec
+	 *            the PrimaryEnumeratedClass to add
+	 */
+	public void addPrimaryEnumeratedClass(IPrimaryEnumeratedClass ipec);
+
+	/**
+	 * Deletes the value hierarchy with the given fully qualified name
+	 * 
+	 * @param fqName
+	 * 
+	 * @throws PrimaryEnumeratedClassRTException if a property declares the enumeratedClass as range
+	 */
+	public void deleteValueHierarchy(String fqName) throws PrimaryEnumeratedClassRTException;
+	
+
+	/**
+	 * return the number of primary enumerated classes in this aristotelian
+	 * ontology
+	 * 
+	 * @return the number of primary enumerated classes
+	 */
+	public int getNbPrimaryEnumeratedClasses();
+
+	/**
+	 * return all the primary enumerated classes defined in this aristotelian
+	 * ontology
+	 * 
+	 * @return a set of the primary enumerated classes
+	 */
+	public Collection<IPrimaryEnumeratedClass> getPrimaryEnumeratedClasses();
+
+	// ----------------------------------------------------------------------------
+	// methods about enumerated properties
+	// ----------------------------------------------------------------------------
+
+	/**
+	 * Returns the EnumeratedProperty with the given name space and id
+	 * 
+	 * @param nameSpace
+	 *            the name space
+	 * @param id
+	 *            the id
+	 * 
+	 * @return the root EnumeratedProperty with to the given id in the given
+	 *         name space. Null if there is no EnumeratedProperty with this id
+	 *         in the given name space.
+	 */
+	public IEnumeratedProperty getEnumeratedProperty(String nameSpace, String id);
+
+	/**
+	 * Returns the EnumeratedProperty with the given fully qualified name
+	 * (name_space + id)
+	 * 
+	 * @param fqName
+	 *            the fully qualified name
+	 * 
+	 * @return the root EnumeratedProperty with to the given fully qualified
+	 *         name. Null if there is no EnumeratedProperty with this id in the
+	 *         given name space.
+	 */
+	public IEnumeratedProperty getEnumeratedProperty(String fqName);
+
+	/**
+	 * Returns the set of EnumeratedProperties used in this AristotelianOntology
+	 * 
+	 * @return the set of EnumeratedProperties
+	 */
+	public Set<IEnumeratedProperty> getEnumeratedProperties();
+
+	/**
+	 * Returns the set of EnumeratedProperties used in this AristotelianOntology
+	 * 		that have a given range
+	 * 
+	 * @param fqEnumClassName
+	 * 	 the fully qualified name of a PrimaryEnumeratedClassName
+	 * 
+	 * @return the set of EnumeratedProperties whose range is the Primary Enumerated Class
+	 *    identified by fqEnumClassName
+	 */
+	public Set<IEnumeratedProperty> findEnumeratedPropertiesByRange(String fqEnumClassName);
+
+	/**
+	 * Returns the set of EnumeratedProperties used in this AristotelianOntology
+	 * 		that have the given genus for domain
+	 * 
+	 * @param fqGenus
+	 * 	 the fully qualified name of the genus
+	 * 
+	 * @return the set of EnumeratedProperties
+	 */
+	public Set<IEnumeratedProperty> findEnumeratedPropertiesByDomain(String fqGenus);
+
+	/**
+	 * Deletes the genus with the given fully qualified name
+	 * 
+	 * @param fqEntityClassName
+	 * 		fully qualified name of the genus to delete
+	 * 
+	 * @throws GenusRTException if there exists any property declaring the genus for domain
+	 */
+	public void deleteGenus(String fqEntityClassName) throws GenusRTException;
+	
+	/**
+	 * Returns the number of EnumeratedProperties contained in this Aristotelian
+	 * ontology
+	 * 
+	 * @return the number of EnumeratedProperties
+	 */
+	public int getNbEnumeratedProperties();
+
+	/**
+	 * Add an EnumeratedProperty to the set of EnumeratedProperties of this
+	 * Aristotelian ontology
+	 * 
+	 * @param property
+	 */
+	public void addEnumeratedProperty(IEnumeratedProperty property);
+
+	// ----------------------------------------------------------------------------
+	// methods about primary entity classes
+	// ----------------------------------------------------------------------------
+
+	/**
+	 * Returns the set of PrimaryEntityClasses of this Aristotelian ontology
+	 * 
+	 * @return the set of all PrimaryEntityClasses
+	 */
+	public Collection<IPrimaryEntityClass> getPrimaryEntityClasses();
+
+	/**
+	 * Find the PrimaryEntityClasses whose definition includes an attribute for the given property
+	 * 
+	 * @param fqPropertyName 
+	 * 		the fully qualified name of the property 
+	 * 
+	 * @return the set of all IPrimaryEntityClasses that have any corresponding attribute
+	 */
+	public Collection<IPrimaryEntityClass> findPrimaryEntityClassesByProperty(String fqPropertyName);
+	
+	/**
+	 * Gets the PrimaryEntityClass with the given name space and id contained in
+	 * the set of PrimaryEntityClasses of this Aristotelian ontology
+	 * 
+	 * @param nameSpace
+	 *            the name space of the PrimaryEntityClass
+	 * @param id
+	 *            the id of the PrimaryEntityClass
+	 * @return the PrimaryEntityClass if it exists, null else
+	 */
+	public IPrimaryEntityClass getPrimaryEntityClass(String nameSpace, String id);
+
+	/**
+	 * Adds the given PrimaryEntityClass to this Aristotelian ontology
+	 * 
+	 * @param primaryEntityClass
+	 *            the PrimaryEntityClass to add
+	 */
+	public void addPrimaryEntityClass(IPrimaryEntityClass primaryEntityClass);
+	
+	/**
+	 * Deletes a PrimaryEntityClass. Subclasses are reclassified.
+	 * 
+	 * @param fqPrimaryEntityClassName
+	 * 	the fully qualified name of the PrimaryEntityClass to delete
+	 */
+	public void deletePrimaryEntityClass(String fqPrimaryEntityClassName);
+	
+	/**
+	 * Deletes a PrimaryEntityClass with all its subclasses
+	 * 
+	 * @param fqPrimaryEntityClassName
+	 * 	the fully qualified name of the PrimaryEntityClass root of the sub-hierarchy to delete
+	 */
+	public void deletePrimaryEntityClassHierarchy(String fqPrimaryEntityClassName);
+	
+	/**
+	 * Gets the number of PrimaryEntityClasses defined in this Aristotelian
+	 * ontology
+	 * 
+	 * @return the number of PrimaryEntityClasses
+	 */
+	public int getNbPrimaryEntityClasses();
+	
+	/**
+	 * returns all the root PrimaryEntityClasses (genera (plural form of genus
+	 * !)) defined in this Aristotelian ontology.
+	 * 
+	 * @return the set of root Primary Entity classes
+	 */
+	public Set<IPrimaryEntityClass> getGenera();
+
+	/**
+	 * adds the given root PrimaryEntityClasses to the set of genera used in
+	 * this Aristotelian ontology.
+	 * 
+	 * @param genus
+	 *            the root PrimaryEntityClasses to add
+	 * 
+	 * @throws GenusRTException
+	 *             if genus is not a root class or if there is all ready a genus
+	 *             equals to the genus to add.
+	 */
+	public void addGenus(IPrimaryEntityClass genus) throws GenusRTException;
+
+	/**
+	 * returns the root PrimaryEntityClass with name id in the given name space
+	 * contained in the set of genera.
+	 * 
+	 * @param nameSpace
+	 *            the name space
+	 * @param id
+	 *            the id
+	 * 
+	 * @return the root PrimaryEntityClass corresponding to the given id in the
+	 *         given name space. Null if there is no PrimaryEntityClass with
+	 *         this id in the given name space.
+	 */
+	public IPrimaryEntityClass getGenus(String nameSpace, String id);
+
+	/**
+	 * return the number of root primary entity classes (Genus) defined in this
+	 * ontology
+	 * 
+	 * @return the number of root primary entity classes (Genus)
+	 */
+	public int getNbGenera();
+
+	/**
+	 * Gets the PrimaryEntityClass or PrimaryEnumerated class with the given
+	 * name space and id contained in this Aristotelian ontology
+	 * 
+	 * @param nameSpace
+	 *            the names space
+	 * @param id
+	 *            the id
+	 * 
+	 * @return the class corresponding if it exists in the ontology, null else
+	 */
+	public IAristotelianOntologyClass getAOClass(String nameSpace, String id);
+
+	/**
+	 * 
+	 * Create a copy of a Primary Entity Class with a new id. The copy has the
+	 * same attributes values, the same super classes and subclasses as the
+	 * original. Only the clone id is modified. Once created the copy is added
+	 * to this aristotelian ontology.
+	 * 
+	 * @param id
+	 *            id of the primary entity class to clone
+	 * @param nameSpace
+	 *            names space of the primary entity class to clone
+	 * @param cloneId
+	 *            id of the clone (it has the same names space as the original)
+	 * 
+	 * @return the new Primary entity Class created by cloning the specified
+	 *         one.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if there is no primary entity class with the given id and
+	 *             namespace in this aristotelian ontology.
+	 */
+	public IPrimaryEntityClass cloneEntityClass(String id, String nameSpace,
+			String cloneId) throws IllegalArgumentException;
+
+	/**
+	 * propagates the attributes from the top classes to subclasses. If a class
+	 * A superclass of a class B has a attribute
+	 * <p,vi>
+	 * and B has not an attribute
+	 * <p,vj>
+	 * where vj = vi or vj is a subclass of vi, the attribute
+	 * <p,vi>
+	 * is copied in the B class description.
+	 * 
+	 * This process is performed recursively from each root (Genus) class.
+	 */
+	public void propagateAttributes();
+	
+	/**
+	 * changes the id of a primary entity class.
+	 * @param entityClass which will have its id changed
+	 * @param id, the new id
+	 */
+	public void changePrimaryEntityClassId(IPrimaryEntityClass entityClass, String id);
+	
+	/**
+	 * changes the id of a primary enumerated class.
+	 * @param enumClass which will have its id changed
+	 * @param id, the new id
+	 */
+	public void changePrimaryEnumeratedClassId(IPrimaryEnumeratedClass enumClass, String id);
+	
+	/**
+	 * changes the id of an enumerated property.
+	 * @param enumProp which will have its id changed
+	 * @param id, the new id
+	 */
+	public void changeEnumeratedPropertyId(IEnumeratedProperty enumProp, String id);
+
+	/**
+	 * @param fileName
+	 */
+	public void setFileName(String fileName);
+
+	/**
+	 * @return
+	 */
+	public String getFileName();
+
+	/**
+	 * @return
+	 */
+	public String getOntologyIRI();
+
+	/**
+	 * @param ontIRI
+	 */
+	void setOntologyIRI(String ontIRI);
+	
+	/**
+	 * Remove a class from the aristotelian ontology.
+	 * @param cl the AristotelianOntology class to remove
+	 */
+	public void remove(IAristotelianOntologyClass cl);
+	
+	/**
+	 * @return the ontology format
+	 */
+	public OWLOntologyFormat getFormat();
+
+	/**
+	 * adds an IRI to the set of imports for this aristotelian ontology
+	 * @param iri the IRI to add
+	 */
+	public void addImport(IRI iri);
+	
+	/**
+	 * returns the set of IRI of the ontologies imported by this ontology
+	 * @return set of imported IRIs
+	 */
+	public Set<IRI> getImportedOntologyIRIs();
+	
+	/**
+	 * removes a value hierarchy subtree.
+	 * 
+	 * @param parentFQName he fully qualified name (namespace#id) of the parent
+	 *        value of the subtree to delete.
+	 *        
+	 * @param childFQName the fully qualified name (namespace#id) of the root of
+	 *        the subtree to delete.
+	 *        
+	 */
+	public void removeValueHiearchySubtree(String parentFQName, String childFQName);
+	
+}
