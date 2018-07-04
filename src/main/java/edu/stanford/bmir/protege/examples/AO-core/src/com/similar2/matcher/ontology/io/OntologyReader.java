@@ -64,6 +64,7 @@ import com.similar2.matcher.ontology.model.impl.AristotelianOntology;
 import com.similar2.matcher.ontology.model.impl.EnumeratedProperty;
 import com.similar2.matcher.ontology.model.impl.PrimaryEntityClass;
 import com.similar2.matcher.ontology.model.impl.PrimaryEnumeratedClass;
+import org.semanticweb.HermiT.Reasoner;
 
 /**
  * An ontology reader allows to read an aristotelian ontology from a file or an inputstream.
@@ -920,7 +921,7 @@ public class OntologyReader {
 		OWLReasonerFactory reasonerFactory = null;
 		// HermiT
 		if (type == ReasonerType.HERMIT) {
-			//reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
+			reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
 		}
 		// FaCT++
 		// else if (type == ReasonerType.FACT) {
@@ -948,8 +949,8 @@ public class OntologyReader {
 		// Create a reasoner that will reason over our ontology and its
 		// imports closure. Pass in the configuration.
 		_reasoner = reasonerFactory.createReasoner(_ontology, config);
-		System.out.println("init reasoner " + getReasonerName() + "."
-				+ getReasonerVersion());
+		//System.out.println("init reasoner " + getReasonerName() + "."
+		//+ getReasonerVersion());
 
 		// Ask the reasoner to do all the necessary work
 		_reasoner.precomputeInferences();

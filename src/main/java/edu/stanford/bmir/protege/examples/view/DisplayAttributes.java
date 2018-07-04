@@ -2,6 +2,9 @@ package edu.stanford.bmir.protege.examples.view;
 
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.stream.Stream;
 import java.awt.BorderLayout;
 import javax.swing.*;
 import javax.swing.JButton;
@@ -99,6 +102,7 @@ import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLFacet;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
+import com.similar2.matcher.ontology.model.IAristotelianOntology;
 
 
 public class DisplayAttributes extends JPanel {
@@ -112,7 +116,7 @@ public class DisplayAttributes extends JPanel {
     private JTable inherited;
     
     private OWLModelManager modelManager;
-
+    IAristotelianOntology ao;
 
     /*private ActionListener refreshAction = e -> recalculate();
     
@@ -122,8 +126,9 @@ public class DisplayAttributes extends JPanel {
         }
     };*/
     
-    public DisplayAttributes(OWLModelManager modelManager, OWLClass cla) {
-    	this.modelManager = modelManager;        
+    public DisplayAttributes(OWLModelManager modelManager, OWLClass cla, IAristotelianOntology ao) {
+    	this.modelManager = modelManager;
+    	this.ao=ao;
         //modelManager.addListener(modelListener);
         //refreshButton.addActionListener(refreshAction);
         BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -180,7 +185,7 @@ public class DisplayAttributes extends JPanel {
         //modelManager.removeListener(modelListener);
         //refreshButton.removeActionListener(refreshAction);
     }
-    
+    /*
     private static class RestrictionVisitor extends OWLClassExpressionVisitorAdapter {
         private final Set<OWLClass> processedClasses;
         private final Set<OWLObjectPropertyExpression> restrictedProperties;
@@ -219,7 +224,7 @@ public class DisplayAttributes extends JPanel {
             restrictedProperties.add(desc.getProperty());
         }
     }
-    
+    */
     public void refresh(OWLClass selectedClass) {    	               
 
         if(selectedClass!=null)
@@ -227,17 +232,14 @@ public class DisplayAttributes extends JPanel {
         	className.setText("Selected Class : " + selectedClass.getIRI().getFragment());
         	
         	String desc="";
-        	for (OWLAnnotation annotation : EntitySearcher.getAnnotations(selectedClass.getIRI(), modelManager.getActiveOntology())) {
+        	for (OWLAnnotation annotation : EntitySearcher.getAnnotations(selectedClass.getIRI(), modelManager.getActiveOntology()).stream().collect(Collectors.toSet())) {
         		if (annotation.getValue() instanceof OWLLiteral) {
         		OWLLiteral val = (OWLLiteral) annotation.getValue();
         		desc+=val.getLiteral()+" | ";
         		}
-        	}
-        	
-        	
-        	
-
-        	
+        	}      	
+        	  	
+        	/*
         	OWLDataFactory factory = modelManager.getOWLDataFactory();
             Set<OWLClassAxiom> tempAx=modelManager.getActiveOntology().getAxioms(selectedClass);
             RestrictionVisitor visitor = new RestrictionVisitor(Collections.singleton(modelManager.getActiveOntology()));
@@ -251,14 +253,12 @@ public class DisplayAttributes extends JPanel {
                         }
                         ax.getSuperClass().accept(visitor);
             }
-            
-            
-            
+               
             for (OWLObjectPropertyExpression prop:visitor.getRestrictedProperties()) {
             	desc+=" " + prop.toString();
             	}
-
-            
+			*/
+            desc+="***"+ao.getNbPrimaryEnumeratedClasses();
             
             description.setText(desc);
         		superClass.setText("Super Class :");
