@@ -7,6 +7,9 @@ import org.protege.editor.owl.ui.view.AbstractOWLViewComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.protege.editor.owl.model.selection.OWLSelectionModelListener;
+import org.protege.editor.owl.model.OWLModelManager;
+import org.protege.editor.owl.model.event.EventType;
+import org.protege.editor.owl.model.event.OWLModelManagerListener;
 
 //import org.semanticweb.owlapi.model.OWLOntologyFormat;
 import com.similar2.matcher.ontology.io.OntologyReader;
@@ -18,7 +21,15 @@ public class AttributesView extends AbstractOWLViewComponent {
     private static final Logger log = LoggerFactory.getLogger(AttributesView.class);
 
     private DisplayAttributes displayComponent;
-    
+    private OWLModelManager modelManager;
+    /*
+    private OWLModelManagerListener modelListener = event -> {
+        if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
+        	try{initialiseOWLView();}
+        	catch(Exception e){}
+        }
+    };
+    */
     OWLSelectionModelListener osmListener=new OWLSelectionModelListener() {
 		public void selectionChanged() throws Exception {
 			displayComponent.refresh(getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
@@ -27,6 +38,7 @@ public class AttributesView extends AbstractOWLViewComponent {
 
     @Override
     protected void initialiseOWLView() throws Exception {
+    	//modelManager.addListener(modelListener);
     	OntologyReader or=new OntologyReader();
     	IAristotelianOntology ao=null;
     	try {
@@ -53,7 +65,8 @@ public class AttributesView extends AbstractOWLViewComponent {
 
 	@Override
 	protected void disposeOWLView() {
-		//displayComponent.dispose();
+		displayComponent.dispose();
+		//modelManager.removeListener(modelListener);
 		getOWLWorkspace().getOWLSelectionModel().removeListener(osmListener);
 	}
 }

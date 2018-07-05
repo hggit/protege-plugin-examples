@@ -103,6 +103,8 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLFacet;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import com.similar2.matcher.ontology.model.IAristotelianOntology;
+import com.similar2.matcher.ontology.io.OntologyReader;
+import com.similar2.matcher.ontology.io.ReasonerType;
 
 
 public class DisplayAttributes extends JPanel {
@@ -118,18 +120,18 @@ public class DisplayAttributes extends JPanel {
     private OWLModelManager modelManager;
     IAristotelianOntology ao;
 
-    /*private ActionListener refreshAction = e -> recalculate();
+    //private ActionListener refreshAction = e -> recalculate();
     
     private OWLModelManagerListener modelListener = event -> {
         if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
-            refresh(getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
+            loadOntology();
         }
-    };*/
+    };
     
     public DisplayAttributes(OWLModelManager modelManager, OWLClass cla, IAristotelianOntology ao) {
     	this.modelManager = modelManager;
     	this.ao=ao;
-        //modelManager.addListener(modelListener);
+        modelManager.addListener(modelListener);
         //refreshButton.addActionListener(refreshAction);
         BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(boxlayout);
@@ -181,8 +183,27 @@ public class DisplayAttributes extends JPanel {
         refresh(cla);
     }
     
+    void loadOntology()
+    {
+    	OntologyReader or=new OntologyReader();
+    	try {
+    		ao=or.loadAristotelianOntology(modelManager.getActiveOntology(),ReasonerType.HERMIT);
+    	}
+    	catch(Exception e)
+    	{/*
+    		File file = new File("X:/himanshu.txt");
+    		PrintWriter printWriter = new PrintWriter(file);
+    		log.info("Initialise owl view :"+e.getMessage());
+    		//log.error(e.getMessage(),e);
+    		e.printStackTrace(printWriter);
+    		//log.info(java.util.logging.Level.INFO, e.getMessage(), e);
+    		log.info("done");
+    		printWriter.close();*/
+    	}
+    }
+    
     public void dispose() {
-        //modelManager.removeListener(modelListener);
+        modelManager.removeListener(modelListener);
         //refreshButton.removeActionListener(refreshAction);
     }
     /*
@@ -258,7 +279,7 @@ public class DisplayAttributes extends JPanel {
             	desc+=" " + prop.toString();
             	}
 			*/
-            desc+="***"+ao.getNbPrimaryEnumeratedClasses();
+            desc+="***"+ao.getNbEnumeratedProperties();
             
             description.setText(desc);
         		superClass.setText("Super Class :");
