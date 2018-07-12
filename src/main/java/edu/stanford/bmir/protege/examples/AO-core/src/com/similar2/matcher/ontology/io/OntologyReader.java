@@ -161,7 +161,7 @@ public class OntologyReader {
 		// they are used respectively as domain and range of enumerated
 		// properties
 		loadValueHierarchies(aristotelianOntology);
-		// loadPrimaryEntityClasses(aristotelianOntology);
+		 loadPrimaryEntityClasses(aristotelianOntology);
 		loadEntitiesHierarchies(aristotelianOntology);
 
 		// stop();
@@ -460,6 +460,7 @@ public class OntologyReader {
 				IAnnotations comments = getAnnotations(
 						_factory.getOWLClass(ni.getIRI()),
 						_factory.getRDFSComment());
+				if (comments != null)
 				ipec.setComments(comments);
 
 				ao.addPrimaryEntityClass(ipec);
@@ -691,7 +692,7 @@ public class OntologyReader {
 				// HACK for minerals-500.owl ontology for missing values
 				value = new PrimaryEnumeratedClass(ao,ent.getIRI().getNamespace(), ent
 						.getIRI().getFragment());
-				property.getRange().addSubClass(value);
+				if(property.getRange()!=null)property.getRange().addSubClass(value);
 				values.add(value);
 			}
 		}
@@ -950,7 +951,7 @@ public class OntologyReader {
 		// imports closure. Pass in the configuration.
 		_reasoner = reasonerFactory.createReasoner(_ontology, config);
 		//System.out.println("init reasoner " + getReasonerName() + "."
-		//+ getReasonerVersion());
+			//	+ getReasonerVersion());
 
 		// Ask the reasoner to do all the necessary work
 		_reasoner.precomputeInferences();

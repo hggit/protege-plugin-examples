@@ -222,14 +222,19 @@ public class AristotelianOntology implements IAristotelianOntology {
 	 */
 	@Override
 	public void addPrimaryEnumeratedClass(IPrimaryEnumeratedClass ipec) {
+		LoggerManager.LOGGER.info("\ntrying to add Primary Enumerated Class {}",
+				ipec.getId());
 		if (_primaryEnumeratedClasses.get(ipec.getFQName()) == null) {
 			_primaryEnumeratedClasses.put(ipec.getFQName(), ipec);
 			LoggerManager.LOGGER.info("\nadded Primary Enumerated Class {}",
 					ipec.getId());
-		} else
+		} else {
+			LoggerManager.LOGGER.info("\ncouldn't add Primary Enumerated Class {}",
+					ipec.getId());
 			throw new PrimaryEnumeratedClassRTException(
 					"Primary enumerated class " + ipec.getFQName()
 							+ " already exists");
+		}
 	}
 
 	/*
@@ -284,9 +289,12 @@ public class AristotelianOntology implements IAristotelianOntology {
 	 */
 	@Override
 	public IEnumeratedProperty getEnumeratedProperty(String fqName) {
-		for (IEnumeratedProperty iep : _enumeratedProperties)
-			if (iep.getFQName().equals(fqName))
-				return iep;
+		for (IEnumeratedProperty iep : _enumeratedProperties) {
+			//LoggerManager.LOGGER.info("\nchecking Enumerated Property {}",
+				//	iep.getFQName());
+			if (iep.getFQName().equals(fqName))				
+					return iep;
+				}
 		return null;
 	}
 

@@ -72,7 +72,7 @@ public class ValuePair implements IValuePair{
 	 */
 	@Override
 	public String toString() {
-		return "<" + property.getId() + "," + value.getId() + ">";
+		return "<" + property.getFQName() + "," + value.getFQName() + ">";
 	}
 }
 

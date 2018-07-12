@@ -106,6 +106,15 @@ import com.similar2.matcher.ontology.model.IAristotelianOntology;
 import com.similar2.matcher.ontology.io.OntologyReader;
 import com.similar2.matcher.ontology.io.ReasonerType;
 
+import com.similar2.matcher.ontology.model.IAristotelianOntology;
+import com.similar2.matcher.ontology.model.IAristotelianOntologyClass;
+import com.similar2.matcher.ontology.model.IValuePair;
+import com.similar2.matcher.ontology.model.IAttributeDescription;
+import com.similar2.matcher.ontology.model.IEnumeratedProperty;
+import com.similar2.matcher.ontology.model.IPrimaryEntityClass;
+import com.similar2.matcher.ontology.model.IPrimaryEnumeratedClass;
+import com.similar2.matcher.ontology.model.impl.DetailedDescription;
+
 
 public class DisplayAttributes extends JPanel {
 
@@ -259,7 +268,17 @@ public class DisplayAttributes extends JPanel {
         		desc+=val.getLiteral()+" | ";
         		}
         	}      	
-        	  	
+        	
+        	OWLClass superclass;
+        	for(OWLClassExpression oce : EntitySearcher.getEquivalentClasses(selectedClass, modelManager.getActiveOntology()).stream().collect(Collectors.toSet()))
+        	{        		        		
+        		if(oce.getClassExpressionType().toString().equals("ObjectIntersectionOf"))
+        		{
+        			for(OWLClassExpression ce : oce.asConjunctSet()) { if(!ce.isAnonymous())//desc+="@";
+        			for(OWLClass oc : ce.getClassesInSignature()) superclass=oc;//desc+=oc.toStringID();
+        			}
+        		}
+        	}
         	/*
         	OWLDataFactory factory = modelManager.getOWLDataFactory();
             Set<OWLClassAxiom> tempAx=modelManager.getActiveOntology().getAxioms(selectedClass);
@@ -268,19 +287,57 @@ public class DisplayAttributes extends JPanel {
                 //for(OWLClassExpression nce:ax.getNestedClassExpressions())
                     //if(nce.getClassExpressionType()!=ClassExpressionType.OWL_CLASS)
             	//Set<OWLClass> signature = ax.getClassesInSignature();
+            	for(OWLClass oc : ax.getSuperClass().getClassesInSignature()) desc+="@"+oc.toStringID();
                         if(ax.getAxiomType().toString().equals("EquivalentClasses"))
                         {
-                        	 
+                        	 desc+="@"+ax.getSuperClass();
                         }
-                        ax.getSuperClass().accept(visitor);
+                        //ax.getSuperClass().accept(visitor);
             }
                
             for (OWLObjectPropertyExpression prop:visitor.getRestrictedProperties()) {
             	desc+=" " + prop.toString();
             	}
 			*/
-            desc+="***"+ao.getNbEnumeratedProperties();
+        	
+        	
+                       
+            IPrimaryEntityClass ipec=ao.getPrimaryEntityClass(selectedClass.getIRI().getNamespace(),selectedClass.getIRI().getFragment());
+            if(ipec!=null) {
+            	DetailedDescription dd=new DetailedDescription(ipec);
+            List<IValuePair> pval=dd.getProperValues();
+            desc+="***"+pval.size();
+            DefaultTableModel diffTableModel = (DefaultTableModel) differentia.getModel();
+            diffTableModel.setRowCount(0);
+            for(IValuePair ivp : pval)
+            	{
+            		//desc+=ivp.toString();
+            		String ar[]=new String[2];
+            		ar[0]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
+            		ar[1]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getValue().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
+            		diffTableModel.addRow(ar);
+            	}
+            differentia.setModel(diffTableModel);
+            diffTableModel.fireTableDataChanged();
+            /*
+            List<IValuePair> ival=dd.getInheritedValues();
+            desc+="***"+ival.size();
+            DefaultTableModel inhTableModel = (DefaultTableModel) inherited.getModel();
+            inhTableModel.setRowCount(0);
+            for(IValuePair ivp : ival)
+            	{
+            		//desc+=ivp.toString();
+            		String ar[]=new String[2];
+            		ar[0]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
+            		ar[1]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getValue().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
+            		diffTableModel.addRow(ar);
+            	}
+            inherited.setModel(inhTableModel);
+            inhTableModel.fireTableDataChanged();*/
             
+            
+            
+            }
             description.setText(desc);
         		superClass.setText("Super Class :");
         		
