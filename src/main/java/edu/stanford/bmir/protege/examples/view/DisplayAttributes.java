@@ -269,16 +269,18 @@ public class DisplayAttributes extends JPanel {
         		}
         	}      	
         	
-        	OWLClass superclass;
+        	OWLClass supcls=null;
         	for(OWLClassExpression oce : EntitySearcher.getEquivalentClasses(selectedClass, modelManager.getActiveOntology()).stream().collect(Collectors.toSet()))
         	{        		        		
         		if(oce.getClassExpressionType().toString().equals("ObjectIntersectionOf"))
         		{
         			for(OWLClassExpression ce : oce.asConjunctSet()) { if(!ce.isAnonymous())//desc+="@";
-        			for(OWLClass oc : ce.getClassesInSignature()) superclass=oc;//desc+=oc.toStringID();
+        			for(OWLClass oc : ce.getClassesInSignature()) supcls=oc;//desc+=oc.toStringID();
         			}
         		}
         	}
+        	
+        	superClass.setText("Super Class :"+supcls.getIRI().getFragment());
         	/*
         	OWLDataFactory factory = modelManager.getOWLDataFactory();
             Set<OWLClassAxiom> tempAx=modelManager.getActiveOntology().getAxioms(selectedClass);
@@ -301,7 +303,7 @@ public class DisplayAttributes extends JPanel {
 			*/
         	
         	
-                       
+        	IPrimaryEntityClass supec=ao.getPrimaryEntityClass(supcls.getIRI().getNamespace(),supcls.getIRI().getFragment());           
             IPrimaryEntityClass ipec=ao.getPrimaryEntityClass(selectedClass.getIRI().getNamespace(),selectedClass.getIRI().getFragment());
             if(ipec!=null) {
             	DetailedDescription dd=new DetailedDescription(ipec);
@@ -339,7 +341,7 @@ public class DisplayAttributes extends JPanel {
             
             }
             description.setText(desc);
-        		superClass.setText("Super Class :");
+        		
         		
         }
     }
