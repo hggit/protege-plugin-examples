@@ -306,39 +306,61 @@ public class DisplayAttributes extends JPanel {
         	IPrimaryEntityClass supec=ao.getPrimaryEntityClass(supcls.getIRI().getNamespace(),supcls.getIRI().getFragment());           
             IPrimaryEntityClass ipec=ao.getPrimaryEntityClass(selectedClass.getIRI().getNamespace(),selectedClass.getIRI().getFragment());
             if(ipec!=null) {
-            	DetailedDescription dd=new DetailedDescription(ipec);
-            List<IValuePair> pval=dd.getProperValues();
-            desc+="***"+pval.size();
+            	
+            	DetailedDescription ddSupec=new DetailedDescription(supec);
+            	List<IValuePair> ival=ddSupec.getProperValues();
+                //desc+="***"+ival.size();
+                DefaultTableModel inhTableModel = (DefaultTableModel) inherited.getModel();
+                inhTableModel.setRowCount(0);
+                String inhAttr[][]=new String[50][2];
+                int i=0;
+                for(IValuePair ivp : ival)
+                	{
+                		//desc+=ivp.toString();
+                		String ar[]=new String[2];
+                		ar[0]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
+                		ar[1]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getValue().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
+                		inhTableModel.addRow(ar);
+                		inhAttr[i][0]=ar[0];
+                		inhAttr[i++][1]=ar[1];
+                	}
+                inherited.setModel(inhTableModel);
+                inhTableModel.fireTableDataChanged();
+                
+            	
+            	DetailedDescription ddIpec=new DetailedDescription(ipec);
+            List<IValuePair> pval=ddIpec.getProperValues();
+            //desc+="***"+pval.size();
             DefaultTableModel diffTableModel = (DefaultTableModel) differentia.getModel();
             diffTableModel.setRowCount(0);
             for(IValuePair ivp : pval)
             	{
             		//desc+=ivp.toString();
             		String ar[]=new String[2];
-            		ar[0]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
-            		ar[1]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getValue().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
-            		diffTableModel.addRow(ar);
+            		Set<OWLAnnotation> s=EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet());
+            		ar[0]=((OWLLiteral)s.iterator().next().getValue()).getLiteral();
+            		for(OWLAnnotation oa:s)
+            		{
+            			if(((OWLLiteral)oa.getValue()).getLiteral().length()<ar[0].length())
+            				ar[0]=((OWLLiteral)oa.getValue()).getLiteral();
+            		}
+            		s=EntitySearcher.getAnnotations(IRI.create(ivp.getValue().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet());
+            		ar[1]=((OWLLiteral)s.iterator().next().getValue()).getLiteral();
+            		for(OWLAnnotation oa:s)
+            		{
+            			if(((OWLLiteral)oa.getValue()).getLiteral().length()<ar[1].length())
+            				ar[1]=((OWLLiteral)oa.getValue()).getLiteral();
+            		}
+            		boolean flag=false;
+            		for(int j=0;j<i;j++)
+            		{
+            			if(ar[0]==inhAttr[j][0] && ar[1]==inhAttr[j][1]) flag=true;
+            		}
+            		if(!flag) diffTableModel.addRow(ar);
             	}
             differentia.setModel(diffTableModel);
             diffTableModel.fireTableDataChanged();
-            /*
-            List<IValuePair> ival=dd.getInheritedValues();
-            desc+="***"+ival.size();
-            DefaultTableModel inhTableModel = (DefaultTableModel) inherited.getModel();
-            inhTableModel.setRowCount(0);
-            for(IValuePair ivp : ival)
-            	{
-            		//desc+=ivp.toString();
-            		String ar[]=new String[2];
-            		ar[0]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
-            		ar[1]=((OWLLiteral)EntitySearcher.getAnnotations(IRI.create(ivp.getValue().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet()).iterator().next().getValue()).getLiteral();
-            		diffTableModel.addRow(ar);
-            	}
-            inherited.setModel(inhTableModel);
-            inhTableModel.fireTableDataChanged();*/
-            
-            
-            
+               
             }
             description.setText(desc);
         		
