@@ -9,11 +9,11 @@ import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
 import java.awt.event.ActionListener;
 
-public class AristotleTab extends OWLWorkspaceViewsTab {
+public class AristotleTab extends OWLWorkspaceViewsTab {	//Himanshu: Structure of tab defined using XML files
 
 	private static final Logger log = LoggerFactory.getLogger(AristotleTab.class);
 	
-	private OWLModelManagerListener modelListener = event -> {
+	private OWLModelManagerListener modelListener = event -> {		//Himanshu: Listener not used here
         if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
             //recalculate();
         }

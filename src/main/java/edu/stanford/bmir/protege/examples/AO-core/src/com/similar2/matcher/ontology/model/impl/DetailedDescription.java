@@ -85,7 +85,7 @@ public class DetailedDescription implements IDetailedDescription {
 	/**
 	 * @return the inheritedValues
 	 */
-	public List<IValuePair> getInheritedValues() {
+	public List<IValuePair> getInheritedValues() {		//Himanshu: Method always returns empty list
 		return inheritedValues;
 	}
 

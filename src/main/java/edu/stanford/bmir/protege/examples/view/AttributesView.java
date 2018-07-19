@@ -16,7 +16,7 @@ import com.similar2.matcher.ontology.io.OntologyReader;
 import com.similar2.matcher.ontology.model.IAristotelianOntology;
 import com.similar2.matcher.ontology.io.ReasonerType;
 
-public class AttributesView extends AbstractOWLViewComponent {
+public class AttributesView extends AbstractOWLViewComponent {		//Himanshu: Creates the Details section of the tab
 
     private static final Logger log = LoggerFactory.getLogger(AttributesView.class);
 
@@ -30,7 +30,7 @@ public class AttributesView extends AbstractOWLViewComponent {
         }
     };
     */
-    OWLSelectionModelListener osmListener=new OWLSelectionModelListener() {
+    OWLSelectionModelListener osmListener=new OWLSelectionModelListener() {		//Himanshu: Detect user selection
 		public void selectionChanged() throws Exception {
 			displayComponent.refresh(getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass());
 		}    		
@@ -39,7 +39,7 @@ public class AttributesView extends AbstractOWLViewComponent {
     @Override
     protected void initialiseOWLView() throws Exception {
     	//modelManager.addListener(modelListener);
-    	OntologyReader or=new OntologyReader();
+    	OntologyReader or=new OntologyReader();		//Himanshu: Using AO-core to read the ontology
     	IAristotelianOntology ao=null;
     	try {
     	ao=or.loadAristotelianOntology(getOWLModelManager().getActiveOntology(),ReasonerType.HERMIT);
@@ -57,7 +57,7 @@ public class AttributesView extends AbstractOWLViewComponent {
     	}
         setLayout(new BorderLayout());
         getOWLWorkspace().getOWLSelectionModel().addListener(osmListener);
-        displayComponent = new DisplayAttributes(getOWLModelManager(),getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass(),ao);        
+        displayComponent = new DisplayAttributes(getOWLModelManager(),getOWLWorkspace().getOWLSelectionModel().getLastSelectedClass(), ao);        
         add(displayComponent);
                         
         log.info("***Attributes initialized***");

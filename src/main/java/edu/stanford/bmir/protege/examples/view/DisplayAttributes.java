@@ -116,7 +116,7 @@ import com.similar2.matcher.ontology.model.IPrimaryEnumeratedClass;
 import com.similar2.matcher.ontology.model.impl.DetailedDescription;
 
 
-public class DisplayAttributes extends JPanel {
+public class DisplayAttributes extends JPanel {		//Himanshu: Manage the Details display using JAVA swing 
 
     //private JButton refreshButton = new JButton("Refresh");
 
@@ -192,7 +192,7 @@ public class DisplayAttributes extends JPanel {
         refresh(cla);
     }
     
-    void loadOntology()
+    void loadOntology()		//Himanshu: Reload ontology if changes are detected
     {
     	OntologyReader or=new OntologyReader();
     	try {
@@ -215,6 +215,7 @@ public class DisplayAttributes extends JPanel {
         modelManager.removeListener(modelListener);
         //refreshButton.removeActionListener(refreshAction);
     }
+    
     /*
     private static class RestrictionVisitor extends OWLClassExpressionVisitorAdapter {
         private final Set<OWLClass> processedClasses;
@@ -255,13 +256,13 @@ public class DisplayAttributes extends JPanel {
         }
     }
     */
-    public void refresh(OWLClass selectedClass) {    	               
+    public void refresh(OWLClass selectedClass) {    	  //Himanshu: Refresh the Details if selection is changed            
 
         if(selectedClass!=null)
         {
         	className.setText("Selected Class : " + selectedClass.getIRI().getFragment());
         	
-        	String desc="";
+        	String desc="";		//Himanshu: Description about selected class
         	for (OWLAnnotation annotation : EntitySearcher.getAnnotations(selectedClass.getIRI(), modelManager.getActiveOntology()).stream().collect(Collectors.toSet())) {
         		if (annotation.getValue() instanceof OWLLiteral) {
         		OWLLiteral val = (OWLLiteral) annotation.getValue();
@@ -269,7 +270,7 @@ public class DisplayAttributes extends JPanel {
         		}
         	}      	
         	
-        	OWLClass supcls=null;
+        	OWLClass supcls=null;		//Himanshu: Superclass of the selected class
         	for(OWLClassExpression oce : EntitySearcher.getEquivalentClasses(selectedClass, modelManager.getActiveOntology()).stream().collect(Collectors.toSet()))
         	{        		        		
         		if(oce.getClassExpressionType().toString().equals("ObjectIntersectionOf"))
@@ -302,7 +303,7 @@ public class DisplayAttributes extends JPanel {
             	}
 			*/
         	
-        	
+        	//Himanshu: Getting attributes of the selected class using AO-core and display in swing table
         	IPrimaryEntityClass supec=ao.getPrimaryEntityClass(supcls.getIRI().getNamespace(),supcls.getIRI().getFragment());           
             IPrimaryEntityClass ipec=ao.getPrimaryEntityClass(selectedClass.getIRI().getNamespace(),selectedClass.getIRI().getFragment());
             if(ipec!=null) {
@@ -336,7 +337,7 @@ public class DisplayAttributes extends JPanel {
             for(IValuePair ivp : pval)
             	{
             		//desc+=ivp.toString();
-            		String ar[]=new String[2];
+            		String ar[]=new String[2];		//Himanshu: ar[0] stores short name of property and ar[1] stores short name of value
             		Set<OWLAnnotation> s=EntitySearcher.getAnnotations(IRI.create(ivp.getProperty().getFQName()), modelManager.getActiveOntology()).stream().collect(Collectors.toSet());
             		ar[0]=((OWLLiteral)s.iterator().next().getValue()).getLiteral();
             		for(OWLAnnotation oa:s)

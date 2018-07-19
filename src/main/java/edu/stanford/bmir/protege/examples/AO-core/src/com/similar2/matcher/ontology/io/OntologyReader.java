@@ -437,6 +437,7 @@ public class OntologyReader {
 		OWLClass primaryEntityClass = AristotelianOntologyVocabulary.PRIMARY_ENTITY_CLASS
 				.getOWLClass();
 		// TODO this code is never called
+		//Himanshu : Done
 		for (Node<OWLNamedIndividual> n : _reasoner.getInstances(
 				primaryEntityClass, true)) {
 			for (OWLNamedIndividual ni : n.getEntities()) {
