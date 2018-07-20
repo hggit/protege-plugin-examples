@@ -1,3 +1,16 @@
+This Protege plugin helps in managing Aristotelian ontologies.
+
+File Structure:
+The "AO-core" folder has the ACE API code.
+The "tab" folder has the "AristotleTab.java" file which implements the Aristotle tab.
+The "view" folder has the file "AttributesView.java" which generates the details of a class using "DisplayAttributes.java".
+The "resources" folder has "plugin.xml" and "viewconfig-aristotletab.xml" which set the layout of the tab and views.
+
+Below are the guidelines to run the plugin.
+
+
+
+
 # protege-plugin-examples
 
 This repository contains example code for developing a tab, view, or menu plug-in for the Protege Desktop ontology editor (*versions 5.0.0 and higher*).  The Maven POM file in the top-level directory demonstrates one possible method for packaging plug-in code into the required OSGi bundle format using the [Maven Bundle Plugin](http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html).
